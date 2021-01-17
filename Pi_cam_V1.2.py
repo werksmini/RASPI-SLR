@@ -1,17 +1,17 @@
-from picamera import PiCamera
-import os
-import digitalio
-import board
-from PIL import Image, ImageDraw
-import ST7789 as ST7789
+from picamera import PiCamera                   #picamera library
+import os                                       #allows command line instructions as well as .py - used here to assign save location to images
+import digitalio                                #used to configure CS and CD pins in some adafruit examples, not sure what it's doing here
+import board                                    #allows python to know what board this is and what pins it has
+from PIL import Image, ImageDraw                #Python imaging library adds image processing capabilities to your Python interpreter.
+import ST7789 as ST7789                         #ST7789 LCD screen library
 
-from io import BytesIO
-from PIL import Image, ImageDraw, ImageOps
+from io import BytesIO                          #used in defining temp_img - unsure
+from PIL import Image, ImageDraw, ImageOps      #redundant? just adds ImageOps
 
-from gpiozero import Button
+from gpiozero import Button                     #button library
 
-from datetime import datetime
-from time import sleep
+from datetime import datetime                   #obvious library
+from time import sleep                          #sleep function at end of while loop
 
 sav_loc = os.path.dirname(os.path.realpath(__file__))
 
