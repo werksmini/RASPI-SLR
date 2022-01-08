@@ -2,19 +2,23 @@
 
 
 
-# Create new pi image, using normal Desktop (not lite or w/ recommended options)
-# Will remove extraneous programs later
+# Create new pi image, using lite image
+dd if=<raspberrypi-os-lite>.img of=/dev/<sd card media> bs=4M conv=fsync
 
 # Add 'ssh' file into boot folder
 touch ssh
 
 # Boot up pi, and run standard configuration
 # Connect via SSH if required, you can use 'ssh pi@raspberypi.local' if no IP address is given
+
+# Change Password
+sudo passwd pi
+
+# Configure Options
 sudo raspi-config
 	System:
 		Change hostname if needed
-		Change password if needed
-		Boot, enable desktop autologin
+		Boot, enable console autologin
 	Interface:
 		Enable camera
 	Performance:
@@ -37,6 +41,12 @@ sudo python3 adafruit-pitft.py --display=st7789_240x240 --rotation=0 --install-t
 
 # Reboot when requested, ensure that pitft is now displaying the desktop
 
+# Minimal GUI and chromium; might be recommended to configure pitft first
+# https://desertbot.io/blog/raspberry-pi-touchscreen-kiosk-setup
+sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit o>
+sudo apt-get install --no-install-recommends chromium-browser
+
+
 # Set up crontab 
 sudo crontab -e
 	Add line:
@@ -45,18 +55,5 @@ sudo crontab -e
 # Setup openbox
 sudo nano /etc/xdg/openbox/autostart
 
-# Add:
-	xset -dpms            # turn off display power management system
-	xset s noblank        # turn off screen blanking
-	xset s off            # turn off screen saver
-
-	# Remove exit errors from the config files that could trigger a>
-
-	sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.con>
-
-	sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exi>
-
-	# Run Chromium in kiosk mode
-	chromium-browser  --noerrdialogs --disable-infobars --kiosk htt>
 
 
