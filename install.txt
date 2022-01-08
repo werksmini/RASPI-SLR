@@ -54,6 +54,15 @@ sudo crontab -e
 
 # Setup openbox
 sudo nano /etc/xdg/openbox/autostart
+# Paste in contents from openbox_autostart_sample.txt
+
+# Set up .bash_profile to start xserver (window manager)
+touch ~/.bash_profile
+# Add in:
+	[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx -- -nocursor
+
+# Test bash_profile, and if no errors, continue:
+source ~/.bash_profile
 
 
-
+# REBOOT
