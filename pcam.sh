@@ -1,10 +1,10 @@
 #!/bin/sh
 
-xset s noblank
-xset s off
-xset -dpms
+cd /home/pi/RASPI-SLR
+sudo python3 ./stream_server.py
 
-cd ~/RASPI-SLR
-sudo python3 ./stream_server.py &
+#export DISPLAY=:0
+#./kiosk.sh &
 
-/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk https://localhost:8000/ &
+#/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost:8000 &
+#/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk https://www.adafruit.com &
