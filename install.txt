@@ -24,6 +24,11 @@ sudo raspi-config
 	Performance:
 		Increase gpu_mem to 256
 
+# Enable legacy camera support
+sudo raspi-config
+	Interface:
+		Legacy camera support
+
 # Update and upgrade system
 sudo apt-get update
 sudo apt-get upgrade
@@ -46,7 +51,6 @@ sudo python3 adafruit-pitft.py --display=st7789_240x240 --rotation=0 --install-t
 sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit o>
 sudo apt-get install --no-install-recommends chromium-browser
 
-
 # Set up crontab 
 sudo crontab -e
 	Add line:
@@ -64,5 +68,11 @@ touch ~/.bash_profile
 # Test bash_profile, and if no errors, continue:
 source ~/.bash_profile
 
+# PROTIP: you can replace the localhost address with https://adafruit.com
+# To ensure that the whole basic config is working; make sure to change it back!
 
-# REBOOT
+# REBOOT, confirm all is working
+
+
+
+
