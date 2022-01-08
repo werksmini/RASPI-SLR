@@ -1,0 +1,53 @@
+
+
+
+
+# Create new pi image, using normal Desktop (not lite or w/ recommended options)
+# Will remove extraneous programs later
+
+# Add 'ssh' file into boot folder
+touch ssh
+
+# Boot up pi, and run standard configuration
+# Connect via SSH if required, you can use 'ssh pi@raspberypi.local' if no IP address is given
+sudo raspi-config
+	System:
+		Change hostname if needed
+		Change password if needed
+		Boot, enable desktop autologin
+	Interface:
+		Enable camera
+	Performance:
+		Increase gpu_mem to 256
+
+# Update and upgrade system
+sudo apt-get update
+sudo apt-get upgrade
+
+# Install required packages
+sudo apt-get install git python3-pip python3-picamera
+
+# Configure mini pitft
+# https://learn.adafruit.com/adafruit-mini-pitft-135x240-color-tft-add-on-for-raspberry-pi/1-3-240x240-kernel-module-install
+sudo pip3 install --upgrade adafruit-python-shell click
+git clone https://github.com/adafruit/Raspberry-Pi-Installer-Scripts.git
+cd Raspberry-Pi-Installer-Scripts
+sudo python3 adafruit-pitft.py --display=st7789_240x240 --rotation=0 --install-type=fbcp
+# The 'fbcp' option makes it so that the pitft can show a desktop environment
+
+# Reboot when requested, ensure that pitft is now displaying the desktop
+
+# Remove extraneous apps and enable kiosk mode
+# https://pimylifeup.com/raspberry-pi-kiosk/
+sudo apt-get purge wolfram-engine scratch scratch2 nuscratch sonic-pi idle3 -y
+sudo apt-get purge smartsim java-common minecraft-pi libreoffice* -y
+sudo apt-get clean
+sudo apt-get autoremove -y
+
+# OPTIONAL; Allows key presses and hides mouse from display
+sudo apt-get install xdotool unclutter sed
+
+# INFO: the below line should not be run, and instead should be included in the shell running script
+#xset s noblank
+#xset s off
+#xset -dpms
